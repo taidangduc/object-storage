@@ -1,5 +1,6 @@
 using Application;
 using Infrastructure.Messaging;
+using Infrastructure.Storage;
 using Persistence;
 using WebAPI.ConfigurationOptions;
 
@@ -18,7 +19,8 @@ services.AddControllers();
 
 services.AddPersistence(appSettings.ConnectionStrings.DefaultConnection)
         .AddApplicationServices()
-        .AddMessaging(appSettings.Messaging);
+        .AddMessaging(appSettings.Messaging)
+        .AddStorage(appSettings.Storage);
 
 var app = builder.Build();
 
@@ -28,6 +30,11 @@ app.MapDefaultEndpoints();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+
+    using (var scope = app.Services.CreateScope()){
+        var serviceProvider = scope.ServiceProvider;
+        await serviceProvider.MigrateAsync();
+    }
 }
 
 //app.UseHttpsRedirection();

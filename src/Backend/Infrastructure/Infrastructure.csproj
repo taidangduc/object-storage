@@ -7,9 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DateTimes\" />
-    <Folder Include="HealthChecks\" />
-    <Folder Include="Monitoring\" />
+    <Compile Remove="DateTimes\**" />
+    <Compile Remove="HealthChecks\**" />
+    <Compile Remove="Monitoring\**" />
+    <EmbeddedResource Remove="DateTimes\**" />
+    <EmbeddedResource Remove="HealthChecks\**" />
+    <EmbeddedResource Remove="Monitoring\**" />
+    <None Remove="DateTimes\**" />
+    <None Remove="HealthChecks\**" />
+    <None Remove="Monitoring\**" />
   </ItemGroup>
 
   <ItemGroup>

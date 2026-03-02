@@ -30,4 +30,11 @@ public static class Extensions
 
         return services;
     }
+
+    public static async Task MigrateAsync(this IServiceProvider serviceProvider, CancellationToken cancellationToken = default)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var dbContext = scope.ServiceProvider.GetRequiredService<StorageDbContext>();
+        await dbContext.Database.MigrateAsync(cancellationToken);
+    }
 }

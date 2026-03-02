@@ -24,7 +24,6 @@ public class FilesController : Controller
     private readonly IEventPublisher _publisher;
     private readonly IRepository<FileEntryImage, Guid> _fileEntryImageRepository;
 
-
     public FilesController(
         IOptions<AppSettings> options,
         IFileStorageManager fileManager,

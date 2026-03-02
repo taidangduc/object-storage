@@ -10,6 +10,6 @@ public class StorageOptions
 
     public bool UseAzure()
     {
-        return Provider == "Azure";
+        return Provider == "AzureBlob";
     }
 }
