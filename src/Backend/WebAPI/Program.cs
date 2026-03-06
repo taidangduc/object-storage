@@ -4,6 +4,7 @@ using Infrastructure.Storage;
 using Persistence;
 using System.Reflection;
 using WebAPI.ConfigurationOptions;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -24,14 +25,43 @@ services.AddPersistence(appSettings.ConnectionStrings.DefaultConnection)
 
 services.AddMessageBus(Assembly.GetExecutingAssembly());
 
+services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc(
+        "ImageGallery",
+        new OpenApiInfo
+        {
+            Title = "ImageGallery API",
+            Version = "1",
+            Description = "ImageGallery API specifications",
+            Contact = new OpenApiContact
+            {
+                Name = "taidangduc",
+                Url = new Uri("https://github.com/taidangduc")
+            },
+            License = new OpenApiLicense
+            {
+                Name = "MIT License",
+                Url = new Uri("https://opensource.org/license/mit/")
+            }
+        });
+});
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
+app.MapOpenApi();
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/ImageGallery/swagger.json", "ImageGallery API");
+    options.RoutePrefix = string.Empty;
+});
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
-
     using (var scope = app.Services.CreateScope())
     {
         var serviceProvider = scope.ServiceProvider;
