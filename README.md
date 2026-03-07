@@ -1,7 +1,19 @@
 # Image Gallery
-> Practical implementation of image post-processing with cloud services integration
+Practical implementation of image post-processing with cloud services integration.
 
+# Architecture
 
+```mermaid
+flowchart LR
+  X[Browser] --> A[Frontend]
+  A --> B[C# API]
+  B --> C[Storage]
+  B --> D[Messaging]
+  B --> E[Database]
+  D --> |Event Trigger| F[Background Worker<br/>or Serverless]
+  F --> C
+  F --> E
+```
 ## Storage Providers
 
 | Storage         | Status         | Path |
