@@ -28,3 +28,18 @@ flowchart LR
 | Azure Queue Storage | <center>✅</center>     | [/Messaging/AzureQueueStorage](src/Backend/Infrastructure/Messaging/AzureQueueStorage) |
 | Fake                | <center>✅</center>     | [/Messaging/Fake](src/Backend/Infrastructure/Messaging/Fake) |
 
+# How to Build and Run Single Page Applications:
+
+React:
+
+- Navigate to folder: [/UI/reactjs/](src/UI/reactjs)
+
+```
+npm install
+npm run dev
+```
+- Go to http://localhost:5173/
+
+<img width="1499" height="942" alt="image" src="https://github.com/user-attachments/assets/65fa5fff-8449-46c9-82c3-590748d1dcc2" />
+
+
