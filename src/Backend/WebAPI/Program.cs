@@ -15,6 +15,8 @@ var services = builder.Services;
 var appSettings = new AppSettings();
 configuration.Bind(appSettings);
 
+services.Configure<AppSettings>(configuration);
+
 builder.AddServiceDefaults();
 
 services.AddOpenApi();
@@ -50,6 +52,17 @@ services.AddSwaggerGen(c =>
         });
 });
 
+services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyMethod()
+              .AllowAnyHeader()
+              .WithExposedHeaders("Content-Disposition");
+    });
+});
+
 var app = builder.Build();
 
 app.MapDefaultEndpoints();
@@ -71,6 +84,8 @@ if (app.Environment.IsDevelopment())
         await serviceProvider.MigrateAsync();
     }
 }
+
+app.UseCors("AllowFrontend");
 
 app.MapControllers();
 

@@ -1,4 +1,4 @@
-import { Box, Button, Checkbox, Menu, Portal, Table } from "@chakra-ui/react";
+import { Box, Button, Checkbox, FormatByte, Menu, Portal, Table } from "@chakra-ui/react";
 import { VscEllipsis, VscEye, VscTrash } from "react-icons/vsc";
 import { GoMoveToBottom } from "react-icons/go";
 import type { FileEntryModel } from "../types";
@@ -34,9 +34,8 @@ export function StorageTableItem({ item, selection, onSelect, onPreview, onDownl
                 </Checkbox.Root>
             </Table.Cell>
             <Table.Cell>{item.name}</Table.Cell>
-            <Table.Cell>{item.description}</Table.Cell>
             <Table.Cell>{item.uploadedAt}</Table.Cell>
-            <Table.Cell>{item.size} kB</Table.Cell>
+            <Table.Cell><FormatByte value={item.size}/></Table.Cell>
             <Table.Cell>
                 <Menu.Root>
                     <Menu.Trigger asChild>

@@ -47,7 +47,7 @@ public class FilesController : Controller
         var fileEntry = new FileEntry
         {
             Name = model.Name,
-            Description = model.Description,
+            Description = model.FormFile.ContentType,
             Size = model.FormFile.Length,
             FileName = model.FormFile.FileName,
             UploadedAt = DateTimeOffset.UtcNow,
@@ -79,7 +79,7 @@ public class FilesController : Controller
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult> Update(Guid id, [FromBody] FileEntryModel model)
+    public async Task<ActionResult> Update(Guid id, string name)
     {
         var fileEntry = await _fileEntryService.GetByIdAsync(id);
         if (fileEntry == null)
@@ -87,12 +87,11 @@ public class FilesController : Controller
             return NotFound();
         }
 
-        fileEntry.Name = model.Name;
-        fileEntry.Description = model.Description;
+        fileEntry.Name = name;
 
         await _fileEntryService.AddOrUpdateAsync(fileEntry);
 
-        return Ok(model);
+        return Ok();
     }
 
     [HttpDelete("{id}")]
@@ -134,9 +133,10 @@ public class FilesController : Controller
     public async Task<IActionResult> DownloadImage(Guid id)
     {
         var fileEntry = await _fileEntryService.GetByIdAsync(id);
+
         if (fileEntry == null)
         {
-            return NotFound();
+            return NotFound("File entry not found.");
         }
 
         var fileEntryImage = _fileEntryImageRepository.GetQueryableSet()
@@ -145,11 +145,25 @@ public class FilesController : Controller
         {
             ImageLocation = x.ImageLocation
         }).FirstOrDefault();
-        
-        var stream = System.IO.File.OpenRead(Path.Combine(_options.Storage.TempFolderPath, fileEntryImage.ImageLocation));
+
+        if (fileEntryImage == null || string.IsNullOrEmpty(fileEntryImage.ImageLocation))
+        {
+            return NotFound("File entry image not found.");
+        }
+
+        var fileEntryModel = new FileEntryModel
+        {
+            Id = fileEntry.Id,
+            FileName = fileEntry.FileName,
+            FileLocation = fileEntryImage.ImageLocation
+        };
+
+        var stream = await _fileManager.DownloadAsync(fileEntryModel);
+
+        // no use
         var ext = Path.GetExtension(fileEntryImage.ImageLocation).ToLowerInvariant();
 
-        return File(stream, MediaTypeNames.Application.Octet, WebUtility.HtmlEncode(fileEntry.FileName + ext));
+        return File(stream, fileEntry.Description, WebUtility.HtmlEncode(fileEntry.FileName));
     }
 
     [HttpGet]

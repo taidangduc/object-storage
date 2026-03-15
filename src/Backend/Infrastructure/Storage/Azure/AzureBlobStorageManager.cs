@@ -60,7 +60,19 @@ public class AzureBlobStorageManager : IFileStorageManager
         return stream.ToArray();
     }
 
+    public async Task DownloadAsync(IFileEntry fileEntry, Stream stream, CancellationToken cancellationToken = default)
+    {
+        BlobClient blob = _container.GetBlobClient(GetBlobName(fileEntry));
+        await blob.DownloadToAsync(stream, cancellationToken);
+    }
+
+    public async Task<Stream> DownloadAsync(IFileEntry fileEntry, CancellationToken cancellationToken = default)
+    {
+        BlobClient blob = _container.GetBlobClient(GetBlobName(fileEntry));
+        return await blob.OpenReadAsync(cancellationToken: cancellationToken);
+    }
+
     public void Dispose()
     {
-    }  
+    }
 }

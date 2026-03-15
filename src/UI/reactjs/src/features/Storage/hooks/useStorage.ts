@@ -5,14 +5,14 @@ import { getList } from "../services/storage-service";
 export function useStorage() {
 
     const dummydata: FileEntryModel[] = [
-        { id: "1", name: "Laptop", description: "Electronics", uploadedAt: "2024-06-01", size: 999.99 },
-        { id: "2", name: "Coffee Maker", description: "Home Appliances", uploadedAt: "2024-06-02", size: 49.99 },
-        { id: "3", name: "Desk Chair", description: "Furniture", uploadedAt: "2024-06-03", size: 150.0 },
-        { id: "4", name: "Smartphone", description: "Electronics", uploadedAt: "2024-06-04", size: 799.99 },
-        { id: "5", name: "Headphones", description: "Accessories", uploadedAt: "2024-06-05", size: 199.99 },
+        { id: "1", name: "Laptop", uploadedAt: "2024-06-01", size: 999.99 },
+        { id: "2", name: "Coffee Maker", uploadedAt: "2024-06-02", size: 49.99 },
+        { id: "3", name: "Desk Chair", uploadedAt: "2024-06-03", size: 150.0 },
+        { id: "4", name: "Smartphone", uploadedAt: "2024-06-04", size: 799.99 },
+        { id: "5", name: "Headphones", uploadedAt: "2024-06-05", size: 199.99 },
     ]
 
-    const [data, setData] = useState<FileEntryModel[]>(dummydata);
+    const [data, setData] = useState<FileEntryModel[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<Error | null>(null);
 

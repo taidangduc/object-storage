@@ -6,6 +6,8 @@ public interface IFileStorageManager : IDisposable
     Task CreateAsync(IFileEntry fileEntry, Stream stream, string? contentType, CancellationToken cancellationToken = default);
     Task DeleteAsync(IFileEntry fileEntry, CancellationToken cancellationToken = default);
     Task<byte[]> ReadAsync(IFileEntry fileEntry, CancellationToken cancellationToken = default);
+    Task DownloadAsync(IFileEntry fileEntry, Stream stream, CancellationToken cancellationToken = default);
+    Task<Stream> DownloadAsync(IFileEntry fileEntry, CancellationToken cancellationToken = default);
 }
 
 public interface IFileEntry

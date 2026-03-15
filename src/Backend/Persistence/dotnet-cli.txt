@@ -5,3 +5,6 @@ dotnet ef migrations add Initial_Storage --project Persistence --startup-project
 dotnet ef database update --project Persistence --startup-project WebAPI --context StorageDbContext
 
 dotnet ef migrations add Update_FileEtry_SetNull_FileLocation --project Persistence --startup-project WebAPI --context StorageDbContext --output-dir Migrations
+
+
+dotnet ef migrations add Set_Null_Description --project Persistence --startup-project WebAPI --context StorageDbContext --output-dir Migrations

@@ -19,10 +19,10 @@ export function StorageTable({ items, selection, onSelect, onSelectAll, onPrevie
 
     return (
         <Box paddingTop="5">
-            <Table.Root>
+            <Table.Root tableLayout="fixed" width="100%">
                 <Table.Header>
                     <Table.Row>
-                        <Table.ColumnHeader w="6">
+                        <Table.ColumnHeader w="20px">
                             <Checkbox.Root
                                 size="sm"
                                 mt="0.5"
@@ -36,17 +36,16 @@ export function StorageTable({ items, selection, onSelect, onSelectAll, onPrevie
                                 <Checkbox.Control />
                             </Checkbox.Root>
                         </Table.ColumnHeader>
-                        <Table.ColumnHeader>Name</Table.ColumnHeader>
-                        <Table.ColumnHeader>Description</Table.ColumnHeader>
-                        <Table.ColumnHeader>Uploaded At</Table.ColumnHeader>
-                        <Table.ColumnHeader>Size</Table.ColumnHeader>
-                        <Table.ColumnHeader></Table.ColumnHeader>
+                        <Table.ColumnHeader w="200px">Name</Table.ColumnHeader>
+                        <Table.ColumnHeader w="150px">Uploaded At</Table.ColumnHeader>
+                        <Table.ColumnHeader w="100px">Size</Table.ColumnHeader>
+                        <Table.ColumnHeader w="40px"></Table.ColumnHeader>
                     </Table.Row>
                 </Table.Header>
                 <Table.Body>
                     {!items || items.length === 0 ? (
                         <Table.Row>
-                            <Table.Cell colSpan={6} border="none" >No items found</Table.Cell>
+                            <Table.Cell colSpan={5} border="none" >No items found</Table.Cell>
                         </Table.Row>
                     ) : (
                         items.map((item) => (

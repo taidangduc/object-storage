@@ -116,10 +116,16 @@ export function StoragePage() {
                 const anchorElement = document.createElement("a");
                 anchorElement.href = href;
 
-                const fileName = response.headers["content-disposition"]
-                    ?.split("filename=")[1]
-                    .replace(/"/g, "")
-                    ?? "file-download";
+                const disposition = response.headers["content-disposition"];
+
+                let fileName = "file-download";
+
+                if (disposition && disposition.includes("filename=")) {
+                    fileName = disposition
+                        .split("filename=")[1]
+                        .split(";")[0]
+                        .replace(/"/g, "");
+                }
 
                 anchorElement.download = fileName;
 
@@ -144,33 +150,27 @@ export function StoragePage() {
     // }
 
     const handlePreview = async (id: string) => {
-        await downloadFile(id)
-            .then((response) => {
+        try {
+            const response = await downloadFile(id);
 
-                const href = window.URL.createObjectURL(response.data);
-
-                const openNewTab = window.open(href, "_blank");
-
-                if (!openNewTab) {
-                    toaster.create({
-                        description: "Popup blocked.",
-                        type: "error",
-                    });
-                    return;
-                }
-
-                // set a timeout before revoke because the new tab needs time to load the image
-                setTimeout(() => {
-                    window.URL.revokeObjectURL(href);
-                }, 2000)
-
-            })
-            .catch(() => {
-                toaster.create({
-                    description: "Error previewing image",
-                    type: "error",
-                });
+            const blob = new Blob([response.data], {
+                type: response.headers["content-type"]
             });
+
+            const url = URL.createObjectURL(blob);
+
+            window.open(url);
+
+            setTimeout(() => {
+                URL.revokeObjectURL(url);
+            }, 5000);
+
+        } catch {
+            toaster.create({
+                description: "Error previewing image",
+                type: "error",
+            });
+        }
     }
 
     const handleSelect = (id: string, checked: boolean) => {
@@ -190,7 +190,7 @@ export function StoragePage() {
 
     return (
         <>
-            <Container mt={4} p={0} maxWidth="1000px" color="black">
+            <Container pt={4} maxWidth="1000px" color="black">
                 <StorageHeader
                     onShowDrawer={() => drawer.setOpen(true)}
                     onRefresh={handleRefresh}
