@@ -1,4 +1,4 @@
-import { Box, Button, Drawer, FileUpload, Icon, Portal, CloseButton, useFileUpload, Code, Checkbox } from "@chakra-ui/react";
+import { Box, Button, Drawer, FileUpload, Icon, Portal, CloseButton, useFileUpload, Code } from "@chakra-ui/react";
 import type { UseDrawerReturn } from "@chakra-ui/react"
 import { VscCloudUpload } from "react-icons/vsc";
 
