@@ -18,16 +18,10 @@ builder.Services
     .AddApplicationInsightsTelemetryWorkerService()
     .ConfigureFunctionsApplicationInsights();
 
-var config = new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json")
-    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json")
-    .AddEnvironmentVariables()
-    .Build();
-
-var connectionString = config.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 var storageOptions = new StorageOptions();
-config.GetSection("Storage").Bind(storageOptions);
+builder.Configuration.GetSection("Storage").Bind(storageOptions);;
 
 builder.Services
     .AddPersistence(connectionString)

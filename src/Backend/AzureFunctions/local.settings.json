@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureBlobStorageConnectionString": "UseDevelopmentStorage=true",
+    "AzureQueueConnectionString": "UseDevelopmentStorage=true",
+
+    "Storage:Provider": "Azure",
+    "Storage:TempFolderPath": "xxx",
+    "Storage:Azure:ConnectionString": "UseDevelopmentStorage=true",
+    "Storage:Azure:Container": "imagegallery",
+    "Storage:Azure:Path": "uploads",
+    "ConnectionStrings:DefaultConnection": "Server=127.0.0.1;Database=ImageGalleryDb;User Id=sa;Password=sqladmin123!@#;TrustServerCertificate=True;Encrypt=False;"
+  }
+}
