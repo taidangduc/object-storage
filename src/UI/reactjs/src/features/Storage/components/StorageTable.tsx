@@ -14,7 +14,6 @@ type Props = {
 
 export function StorageTable({ items, selection, onSelect, onSelectAll, onPreview, onDownload, onDelete }: Props) {
 
-    const hasSelection = selection.length > 0
     const indeterminate = selection.length > 0 && selection.length < items.length
 
     return (

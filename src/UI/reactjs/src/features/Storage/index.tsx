@@ -7,7 +7,7 @@ import { useState } from "react";
 
 export function StoragePage() {
 
-    const { data, isLoading, error, refresh } = useStorage();
+    const { data, refresh } = useStorage();
     const [selection, setSelection] = useState<string[]>([]);
 
     const drawer = useDrawer();
