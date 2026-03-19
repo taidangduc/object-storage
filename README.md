@@ -14,7 +14,7 @@ flowchart LR
   F --> C
   F --> E
 ```
-## Storage Providers
+# Storage Providers
 
 | Storage         | Status         | Path |
 |------------------|:------:|------|
@@ -24,7 +24,7 @@ flowchart LR
 | Amazon S3       | <center>❌</center>     | |
 | Fake             | <center>✅</center>     | [/Storage/Fake](src/Backend/Infrastructure/Storage/Fake) |
 
-## Messaging Providers
+# Messaging Providers
 
 | Messaging            | Status         | Path           |
 |---------------------|:------:|----------------|
